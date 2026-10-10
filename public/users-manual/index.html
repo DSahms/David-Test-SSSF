@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A mouse-first guide to using the SSSF Studio.">
+  <title>User's Manual — SSSF Studio</title>
+  <style>
+    :root { color-scheme: light; --paper: #faf9f5; --ink: #1a1915; --muted: #6b6862; --clay: #c15f3c; --line: #e3e0d8; --card: #fff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.7 system-ui, sans-serif; }
+    main { max-width: 780px; margin: 0 auto; padding: 36px 24px 72px; }
+    a { color: var(--clay); }
+    h1, h2 { line-height: 1.2; letter-spacing: -.02em; }
+    h1 { font: 600 clamp(2rem, 6vw, 3.5rem)/1.1 Georgia, serif; }
+    h2 { margin-top: 2.5rem; font: 600 1.7rem Georgia, serif; }
+    .lead { color: var(--muted); font-size: 1.15rem; }
+    .step { margin: 14px 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+    .step strong { color: var(--clay); }
+    .callout { border-left: 4px solid var(--clay); padding: 12px 18px; background: #f4e4dc; border-radius: 0 10px 10px 0; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+    .actions a { padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); font-weight: 600; }
+    @media (max-width: 520px) { main { padding: 24px 16px 48px; } body { font-size: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">← Back to the app</a></p>
+    <h1>SSSF Studio<br>User's Manual</h1>
+    <p class="lead">A calm, mouse-first guide. You can use the essential workflow without typing on a keyboard.</p>
+
+    <div class="actions">
+      <a href="/learners-manual/index.html">Open the Learner's Manual</a>
+      <a href="/">Open the app</a>
+    </div>
+
+    <h2>Start a job</h2>
+    <div class="step"><strong>1. Choose a workspace.</strong> Select an existing workspace, or choose New workspace → Create My Workspace. You do not need to type a name.</div>
+    <div class="step"><strong>2. Tell the Discovery agent what you need.</strong> Choose Speak and talk naturally. Or choose Paste for copied text, or Import .md to select an existing Markdown file. You do not need to write a specification yourself.</div>
+    <div class="step"><strong>3. Review together.</strong> The agent asks about one detail at a time and prepares a proposal. Speak, paste, or import more information to refine it.</div>
+    <div class="step"><strong>4. Approve when ready.</strong> Review the proposal and select Approve specification. The Python workflow cannot proceed until you explicitly approve.</div>
+    <div class="step"><strong>5. Follow the work.</strong> Open Runs, choose a workflow, and launch it. The progress view shows the phases and result.</div>
+
+    <p class="callout"><strong>Need help?</strong> Select Take the tour to walk through the app again. For detailed lessons and explanations, open the Learner's Manual.</p>
+
+    <h2>Provider credentials</h2>
+    <p>Choose Configuration → AI provider setup. Copy a setting from your provider and choose Paste from clipboard beside it. The intake assistant uses LLM_BASE_URL, LLM_MODEL, and (if needed) LLM_API_KEY. Save values to the workspace's gitignored environment file. Never place keys in source code or commit them.</p>
+
+    <h2>Accessibility notes</h2>
+    <ul>
+      <li>Voice input depends on browser support and microphone permission. Clipboard and file-picker alternatives are available.</li>
+      <li>Text fields remain available for people who prefer them, but keyboard typing is not required for the main conversation flow.</li>
+      <li>This is an early interface foundation; guided provider setup and desktop packaging are still to come.</li>
+    </ul>
+  </main>
+</body>
+</html>

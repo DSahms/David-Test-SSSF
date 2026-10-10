@@ -1,0 +1,90 @@
+// SSSF Studio — app-level state.
+// The factory's own trace DB (sssf.db inside each target repo) is read directly
+// via better-sqlite3, NOT through Prisma — it has its own schema (see
+// sssf-factory/adws/adw_modules/tracer.py).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  path      String   @unique // absolute path to the target repo on disk
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  discoverySessions DiscoverySession[]
+  approvals         Approval[]
+  launches          Launch[]
+}
+
+// One Discovery session = one chat + one evolving spec draft, ending in an
+// approval (or abandoned). The spec draft lives here as the source of truth
+// while the user iterates; on approval it is written into the target repo.
+model DiscoverySession {
+  id          String   @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  title       String   @default("Untitled discovery")
+  specDraft   String   @default("") // the live markdown the user is refining
+  status      String   @default("draft") // draft | approved | abandoned
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  messages Message[]
+
+  @@index([workspaceId])
+}
+
+model Message {
+  id                 String   @id @default(cuid())
+  discoverySessionId String
+  discoverySession   DiscoverySession @relation(fields: [discoverySessionId], references: [id], onDelete: Cascade)
+  role               String   // user | assistant | system
+  content            String   @default("")
+  // Structured feedback payload (JSON) for assistant review messages:
+  // { missing:[], ambiguities:[], suggestions:[], questions:[], risks:[], summary:"" }
+  feedback           String?
+  createdAt          DateTime @default(now())
+
+  @@index([discoverySessionId])
+}
+
+model Approval {
+  id          String   @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  // path inside the target repo where the approved markdown was written
+  specPath    String
+  specTitle   String
+  specPreview String   @default("") // first ~300 chars
+  createdAt   DateTime @default(now())
+
+  @@index([workspaceId])
+}
+
+model Launch {
+  id          String   @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  adwId       String   // the --adw-id passed to the factory (also the trace session key)
+  adw         String   // e.g. adw_simple_sdlc
+  configPath  String
+  specPath    String
+  pid         Int?
+  status      String   @default("launched") // launched | running | done | error
+  exitCode    Int?
+  logPath     String?
+  error       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([workspaceId])
+}

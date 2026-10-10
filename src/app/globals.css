@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-sidebar-ring: var(--border);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-accent-foreground: var(--fg);
+  --color-sidebar-accent: var(--surface-2);
+  --color-sidebar-primary-foreground: var(--fg-on-accent);
+  --color-sidebar-primary: var(--accent);
+  --color-sidebar-foreground: var(--fg);
+  --color-sidebar: var(--surface);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--danger);
+  --color-accent-foreground: var(--fg-on-accent);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--fg-muted);
+  --color-muted: var(--surface-2);
+  --color-secondary-foreground: var(--fg);
+  --color-secondary: var(--surface-2);
+  --color-primary-foreground: var(--fg-on-accent);
+  --color-primary: var(--accent);
+  --color-popover-foreground: var(--fg);
+  --color-popover: var(--surface);
+  --color-card-foreground: var(--fg);
+  --color-card: var(--surface);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* SSSF Studio semantic tokens — mapped from the palette below */
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-fg-on-accent: var(--fg-on-accent);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+}
+
+:root {
+  /* Light — warm cream / clay, Anthropic-inspired */
+  --radius: 0.5rem;
+  --bg: #faf9f5;          /* warm paper */
+  --fg: #1a1915;          /* near-black, warm */
+  --fg-muted: #6b6862;    /* warm gray */
+  --surface: #ffffff;     /* card white */
+  --surface-2: #f3f1eb;   /* subtle wash */
+  --surface-3: #e8e5dd;   /* divider wash */
+  --border: #e3e0d8;      /* warm hairline */
+  --accent: #c15f3c;      /* clay / terracotta */
+  --accent-soft: #f4e4dc; /* clay wash */
+  --fg-on-accent: #ffffff;
+  --danger: #b43a2e;
+  --success: #4a7c59;
+  --warning: #b8862f;
+  --ring: #c15f3c;
+  --input: #e3e0d8;
+  --chart-1: #c15f3c;
+  --chart-2: #4a7c59;
+  --chart-3: #b8862f;
+  --chart-4: #6b6862;
+  --chart-5: #8a5a3c;
+}
+
+.dark {
+  /* Dark — warm charcoal, not cold zinc */
+  --bg: #1c1b18;          /* warm near-black */
+  --fg: #ebe7df;          /* warm off-white */
+  --fg-muted: #a8a39a;    /* warm gray */
+  --surface: #262522;     /* card */
+  --surface-2: #2f2d2a;   /* subtle raised */
+  --surface-3: #3a3833;   /* divider */
+  --border: #3a3833;
+  --accent: #d97757;      /* Claude clay, brighter on dark */
+  --accent-soft: #3a2e28;
+  --fg-on-accent: #1c1b18;
+  --danger: #e57065;
+  --success: #6fa97f;
+  --warning: #d4a44a;
+  --ring: #d97757;
+  --input: #3a3833;
+  --chart-1: #d97757;
+  --chart-2: #6fa97f;
+  --chart-3: #d4a44a;
+  --chart-4: #a8a39a;
+  --chart-5: #c89673;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+}
+
+/* ── SSSF Studio custom styles ─────────────────────────────────────────── */
+
+.studio-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--fg-muted) 35%, transparent) transparent;
+}
+.studio-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.studio-scroll::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--fg-muted) 35%, transparent); border-radius: 8px; }
+.studio-scroll::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--fg-muted) 55%, transparent); }
+.studio-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* Serif display headings — the Anthropic signature */
+.font-display { font-family: var(--font-serif), Georgia, serif; }
+
+/* Markdown rendering tuned to the warm palette */
+.sssf-md { font-size: 13.5px; line-height: 1.7; color: var(--fg); word-break: break-word; }
+.sssf-md > *:first-child { margin-top: 0; }
+.sssf-md > *:last-child { margin-bottom: 0; }
+.sssf-md h1, .sssf-md h2, .sssf-md h3, .sssf-md h4 { font-family: var(--font-serif), Georgia, serif; font-weight: 600; line-height: 1.25; margin: 1.2em 0 0.5em; color: var(--fg); letter-spacing: -0.01em; }
+.ssf-md h1, .sssf-md h1 { font-size: 1.45em; }
+.sssf-md h2 { font-size: 1.22em; }
+.sssf-md h3 { font-size: 1.06em; }
+.sssf-md h4 { font-size: 0.96em; }
+.sssf-md p { margin: 0.6em 0; }
+.sssf-md ul, .sssf-md ol { margin: 0.5em 0; padding-left: 1.4em; }
+.sssf-md li { margin: 0.22em 0; }
+.sssf-md li > ul, .sssf-md li > ol { margin: 0.2em 0; }
+.sssf-md code { font-family: var(--font-mono); font-size: 0.85em; background: var(--surface-2); color: var(--fg); padding: 0.1em 0.35em; border-radius: 4px; }
+.sssf-md pre { background: var(--surface-3); color: var(--fg); padding: 0.9em 1.05em; border-radius: 8px; overflow-x: auto; margin: 0.75em 0; font-size: 12px; line-height: 1.55; border: 1px solid var(--border); }
+.sssf-md pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+.sssf-md blockquote { border-left: 3px solid var(--accent); padding-left: 0.95em; margin: 0.75em 0; color: var(--fg-muted); font-style: italic; }
+.sssf-md a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.sssf-md hr { border: none; border-top: 1px solid var(--border); margin: 1.1em 0; }
+.sssf-md strong { font-weight: 600; color: var(--fg); }
+.sssf-md table { border-collapse: collapse; margin: 0.75em 0; font-size: 12px; width: 100%; }
+.sssf-md th, .sssf-md td { border: 1px solid var(--border); padding: 0.4em 0.65em; text-align: left; }
+.sssf-md th { background: var(--surface-2); font-weight: 600; }
+
+/* Subtle fade-in for tab content */
+@keyframes studio-fade { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: none; } }
+.studio-fade { animation: studio-fade 0.18s ease-out; }
